@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 # https://github.com/warrenguy/javascript-pgp-word-list
 
 from binascii import unhexlify
+from typing import Dict, Tuple, Text ; del Dict, Tuple, Text
 
 raw_words = {
 '00': ['aardvark', 'adroitness'], '01': ['absurd', 'adviser'],
@@ -137,13 +138,13 @@ raw_words = {
 'FA': ['wallet', 'whimsical'], 'FB': ['watchword', 'Wichita'],
 'FC': ['wayside', 'Wilmington'], 'FD': ['willow', 'Wyoming'],
 'FE': ['woodlark', 'yesteryear'], 'FF': ['Zulu', 'Yucatan']
-};
+} # type: Dict[Text, List[Text]]
 
-byte_to_even_word = dict([(unhexlify(k), both_words[0])
+byte_to_even_word = dict([(unhexlify(k.encode("ascii")), both_words[0])
                           for k,both_words
                           in raw_words.items()])
 
-byte_to_odd_word = dict([(unhexlify(k), both_words[1])
+byte_to_odd_word = dict([(unhexlify(k.encode("ascii")), both_words[1])
                          for k,both_words
                          in raw_words.items()])
 even_words_lowercase, odd_words_lowercase = set(), set()
@@ -152,7 +153,7 @@ for k,both_words in raw_words.items():
     even_word, odd_word = both_words
 
     even_words_lowercase.add(even_word.lower())
-    even_words_lowercase_to_byte[even_word.lower()] = unhexlify(k)
+    even_words_lowercase_to_byte[even_word.lower()] = unhexlify(k.encode("ascii"))
 
     odd_words_lowercase.add(odd_word.lower())
-    odd_words_lowercase_to_byte[odd_word.lower()] = unhexlify(k)
+    odd_words_lowercase_to_byte[odd_word.lower()] = unhexlify(k.encode("ascii"))
